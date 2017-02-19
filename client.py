@@ -36,7 +36,9 @@ class RecvWorker(threading.Thread):
     def run(self):
         while True:
             msg = json.loads(self.sock.recv(1024))
-            print msg["name"].split(':')[0] + ": " + msg["msg"] + "\n"
+            f = open("chat.log", "a+")
+            f.write(msg["name"].split(':')[0] + ": " + msg["msg"] + "\n")
+            f.close()
 
 
 if __name__ == "__main__":
