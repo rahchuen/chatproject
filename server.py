@@ -31,9 +31,11 @@ class QueueWorker(threading.Thread):
 
   def run(self):
     while True:
-      message = self.queue.get()
-      for worker in self.clientWorkers.values():
-        worker.send(json.dumps(message)) 
+      formattedMessage = self.queue.get()
+      sender = formattedMessage['name']
+      for receiver, clientWorker in self.clientWorkers.iteritems():
+        if sender != receiver:
+          clientWorker.send(json.dumps(formattedMessage)) 
   
 class Server():
   def __init__(self):

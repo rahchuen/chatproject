@@ -21,7 +21,7 @@ class Client():
 
     def waitForMessage(self):
         while True:
-            msg = raw_input(name + ": ")
+            msg = raw_input(self.name.split(':')[0] + ": ")
             data = {}
             data["name"] = self.name
             data["msg"] = msg
@@ -36,7 +36,7 @@ class RecvWorker(threading.Thread):
     def run(self):
         while True:
             msg = json.loads(self.sock.recv(1024))
-            print msg["name"] + ": " + msg["msg"] + "\n"
+            print msg["name"].split(':')[0] + ": " + msg["msg"] + "\n"
 
 
 if __name__ == "__main__":
